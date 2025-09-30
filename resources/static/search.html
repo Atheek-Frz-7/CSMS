@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Parts - Computer Spare Parts System</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Roboto', Arial, sans-serif; background: linear-gradient(120deg, #2980b9, #6dd5fa); margin: 0; padding: 0; }
+        .container { max-width: 500px; margin: 60px auto; background: #fff; border-radius: 12px; box-shadow: 0 8px 24px rgba(44,62,80,0.15); padding: 32px 24px 24px 24px; }
+        .header { text-align: center; margin-bottom: 24px; }
+        .header h1 { color: #2980b9; font-size: 2rem; margin-bottom: 8px; }
+        .header p { color: #555; font-size: 1rem; }
+        .search-form { display: flex; flex-direction: column; margin-bottom: 16px; }
+        .search-form label { margin-bottom: 6px; color: #2980b9; font-weight: 700; }
+        .search-form input, .search-form select { padding: 10px; margin-bottom: 16px; border: 1px solid #b2bec3; border-radius: 6px; font-size: 1rem; }
+        .search-form button { background: #2980b9; color: #fff; border: none; padding: 12px; border-radius: 6px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+        .search-form button:hover { background: #2574a9; }
+        .results { margin-top: 24px; }
+        .result-item { background: #f1f1f1; border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(44,62,80,0.07); }
+        .result-title { font-weight: 700; color: #2980b9; }
+        .result-desc { color: #555; font-size: 0.95rem; }
+        .error-msg { color: #c0392b; text-align: center; margin-bottom: 12px; }
+        .no-results { color: #c0392b; text-align: center; margin-top: 16px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Search Spare Parts</h1>
+            <p>Find the parts you need before ordering.</p>
+        </div>
+        <form class="search-form" action="/api/products/search" method="GET">
+            <label for="keyword">Keyword</label>
+            <input type="text" id="keyword" name="keyword" placeholder="Enter part name or keyword" required>
+            <label for="category">Category</label>
+            <select id="category" name="category">
+                <option value="">-- All Categories --</option>
+                <option value="cpu">CPU</option>
+                <option value="ram">RAM</option>
+                <option value="storage">Storage</option>
+                <option value="motherboard">Motherboard</option>
+                <option value="gpu">GPU</option>
+                <option value="accessories">Accessories</option>
+            </select>
+            <button type="submit">Search</button>
+        </form>
+        <div class="error-msg" id="errorMsg"></div>
+        <div class="results" id="results"></div>
+        <div class="no-results" id="noResults"></div>
+        <div style="text-align:center; margin-top:16px;">
+            <a href="dashboard.html">Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>
+

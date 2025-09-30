@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Computer Spare Parts System</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Roboto', Arial, sans-serif; background: linear-gradient(120deg, #2980b9, #6dd5fa); margin: 0; padding: 0; }
+        .container { max-width: 400px; margin: 60px auto; background: #fff; border-radius: 12px; box-shadow: 0 8px 24px rgba(44,62,80,0.15); padding: 32px 24px 24px 24px; }
+        .header { text-align: center; margin-bottom: 24px; }
+        .header h1 { color: #2980b9; font-size: 2rem; margin-bottom: 8px; }
+        .header p { color: #555; font-size: 1rem; }
+        .signup-form { display: flex; flex-direction: column; }
+        .signup-form label { margin-bottom: 6px; color: #2980b9; font-weight: 700; }
+        .signup-form input { padding: 10px; margin-bottom: 16px; border: 1px solid #b2bec3; border-radius: 6px; font-size: 1rem; }
+        .signup-form button { background: #2980b9; color: #fff; border: none; padding: 12px; border-radius: 6px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+        .signup-form button:hover { background: #2574a9; }
+        .error-msg, .success-msg { text-align: center; margin-bottom: 12px; font-size: 1rem; }
+        .error-msg { color: #c0392b; }
+        .success-msg { color: #27ae60; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Sign Up</h1>
+            <p>Create your account to order spare parts.</p>
+        </div>
+        <form class="signup-form" id="signupForm">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="passwordHash" required>
+            <label for="role">Role</label>
+            <input type="text" id="role" name="role" value="customer" readonly>
+            <button type="submit">Sign Up</button>
+        </form>
+        <div class="error-msg" id="errorMsg"></div>
+        <div class="success-msg" id="successMsg"></div>
+        <div style="text-align:center; margin-top:16px;">
+            <a href="dashboard.html">Back to Login</a>
+        </div>
+        <script>
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const data = {
+                username: document.getElementById('username').value,
+                email: document.getElementById('email').value,
+                passwordHash: document.getElementById('password').value,
+                role: 'customer'
+            };
+            fetch('http://localhost:8080/api/it/users', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('successMsg').textContent = 'Sign up successful!';
+                    document.getElementById('errorMsg').textContent = '';
+                } else {
+                    return response.text().then(text => { throw new Error(text); });
+                }
+            })
+            .catch(error => {
+                document.getElementById('errorMsg').textContent = 'Sign up failed: ' + error.message;
+                document.getElementById('successMsg').textContent = '';
+            });
+        });
+        </script>
+    </div>
+</body>
+</html>
